@@ -18,7 +18,7 @@ jobs:
 
     - name: Generate Prime Numbers
       if: steps.cache-primes.outputs.cache-hit != 'true'
-      run: ./generate-primes.sh
+      run: ./generate_primes.sh
 
     - name: Use Prime Numbers
       run: ./primes.sh
