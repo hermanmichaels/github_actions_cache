@@ -1,0 +1,29 @@
+name: Caching Env
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.10.0
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10.0"
+
+    - name: Install poetry
+      run: curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Cache Env
+      id: cache-env
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pypoetry
+        key: ${{ runner.os }}-env
+
+    - name: Install poetry dependencies
+      if: steps.cache-env.outputs.cache-hit != 'true'
+      run: poetry install
